@@ -24,10 +24,10 @@ import laptop2 from "./assets/laptop2.webp";
 import laptop3 from "./assets/laptop3.webp";
 import laptop4 from "./assets/laptop4.jpg";
 
-import headset1 from "./assets/earbuds1.webp";
-import headset2 from "./assets/earbuds2.jpg";
-import headset3 from "./assets/earbuds3.webp";
-import headset4 from "./assets/earbuds4.jpg";
+import headset1 from "./assets/headset1.webp";
+import headset2 from "./assets/headset2.jpg";
+import headset3 from "./assets/headset3.webp";
+import headset4 from "./assets/headset4.jpeg";
 
 import mouse1 from "./assets/mouse1.webp";
 import mouse2 from "./assets/mouse2.jpg";
@@ -82,10 +82,10 @@ export const getLaptops = () => [
 ];
 
 export const getHeadsets = () => [
-  { img: headset1, category: "Music", name: "EarBuds ", price: "$67.88" },
-  { img: headset2, category: "Music", name: "EarBuds ", price: "$70.00" },
-  { img: headset3, category: "Music", name: "EarBuds ", price: "$75.00" },
-  { img: headset4, category: "Music", name: "EarBuds ", price: "$80.00" },
+  { img: headset1, category: "Music", name: "HeadSet ", price: "$67.88" },
+  { img: headset2, category: "Music", name: "HeadSet ", price: "$70.00" },
+  { img: headset3, category: "Music", name: "HeadSet ", price: "$75.00" },
+  { img: headset4, category: "Music", name: "HeadSet ", price: "$80.00" },
 ];
 
 export const getMouse = () => [
