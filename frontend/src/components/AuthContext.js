@@ -14,23 +14,26 @@ export const AuthProvider = ({ children }) => {
     }
   }, []);
 
-  // login function
+  // login function (fixed)
   const login = async (username, password) => {
     try {
-      const res = await axios.post("http://localhost:5000/api/login", {
+      // Use the correct backend endpoint for login
+      const res = await axios.post("http://localhost:5000/api/users/login", {
         username,
         password,
       });
 
-      if (res.data.success) {
-        setUser(res.data.user); // save user info (role, id, etc.)
-        localStorage.setItem("user", JSON.stringify(res.data.user)); // persist to localStorage
-        return { success: true, role: res.data.user.role };
+      const data = res.data;
+
+      if (data.success) {
+        setUser(data.user); // save user info (role, id, etc.)
+        localStorage.setItem("user", JSON.stringify(data.user)); // persist to localStorage
+        return { success: true, role: data.user.role, user: data.user };
       } else {
-        return { success: false, message: res.data.message };
+        return { success: false, message: data.message };
       }
     } catch (err) {
-      console.error(err);
+      console.error("Login error:", err);
       return { success: false, message: "Server error" };
     }
   };

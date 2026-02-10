@@ -2,40 +2,51 @@ const express = require("express");
 const cors = require("cors");
 const multer = require("multer");
 const path = require("path");
-const db = require("./db"); // your database connection
+const db = require("./db"); // MySQL connection
 
 const app = express();
-app.use(cors());
+
+/* =========================
+   MIDDLEWARE
+========================= */
+app.use(cors()); // allows all origins; adjust if needed
 app.use(express.json());
+
+// Serve uploaded files
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
-// Routes
-const usersRouter = require("./routes/users");
-const adminRouter = require("./routes/admin");
-const heroRouter = require("./routes/hero");
-app.use("/api", usersRouter);
-app.use("/api/admin", adminRouter);
-app.use("/api/hero", heroRouter);
+/* =========================
+   ROUTES
+========================= */
+app.use("/api/users", require("./routes/users")); // login & register
+app.use("/api/admin", require("./routes/admin"));
+app.use("/api/hero", require("./routes/hero"));
 
-// Configure multer
+/* =========================
+   MULTER CONFIG (file uploads)
+========================= */
 const storage = multer.diskStorage({
   destination: (req, file, cb) => cb(null, "uploads/"),
   filename: (req, file, cb) => cb(null, Date.now() + path.extname(file.originalname)),
 });
 const upload = multer({ storage });
 
-// ---------------- Products Routes ----------------
+/* =========================
+   PRODUCTS ROUTE
+========================= */
 app.get("/api/products", (req, res) => {
   db.query("SELECT * FROM products", (err, result) => {
-    if (err) return res.status(500).json({ error: err.message });
+    if (err) {
+      console.error("DB error:", err);
+      return res.status(500).json({ error: "Database error" });
+    }
     res.json(result);
   });
 });
 
-// ---------------- Server ----------------
+/* =========================
+   SERVER START
+========================= */
 app.listen(5000, () => {
   console.log("Server running on http://localhost:5000");
 });
-
-
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
